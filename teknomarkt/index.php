@@ -13,6 +13,21 @@ if(isset($_REQUEST["SK"])){
     $SayfaKoduDegeri = 0;
 }
 
+
+
+$kur = simplexml_load_file("https://www.tcmb.gov.tr/kurlar/today.xml");
+foreach ($kur -> Currency as $cur) {
+   if ($cur["Kod"] == "USD") {
+       $usdAlis  = $cur -> ForexBuying;
+       $usdSatis = $cur -> ForexSelling;
+   }
+
+   if ($cur["Kod"] == "EUR") {
+       $eurAlis  = $cur -> ForexBuying;
+       $eurAlis = $cur -> ForexSelling;
+   }
+}
+
 ?>
 
 
@@ -44,7 +59,12 @@ if(isset($_REQUEST["SK"])){
                 <table width="1065" height="30" align="center" border="0" cellpadding="0" cellspacing="0" >
                     <tr bgcolor ="#0088CC">
                         <td></td>
-
+                            <td>
+                            <b>USD Aliş: </b> <?php echo $usdAlis; ?> <br>
+                            </td>
+                            <td>
+                            <b>USD Satiş: </b> <?php echo $usdSatis; ?>
+                            </td>
                         <?php
 
                             if(isset($_SESSION["Kullanici"])){
